@@ -16,6 +16,25 @@ const Todo = () => {
     setTodoList((prev) => [...prev, newTodo]);
     inputRef.current.value = "";
   };
+  const deleteTodo = (id) => {
+    setTodoList((prevTodos) => {
+      return prevTodos.filter((todo) => todo.id !== id);
+    });
+  };
+
+  const toogle = (id) => {
+    setTodoList((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            isCompleted: !todo.isCompleted,
+          };
+        }
+        return todo;
+      });
+    });
+  };
   return (
     <div className="bg-white place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl">
       <div className="flex items-center mt-7 gap-2">
@@ -43,6 +62,8 @@ const Todo = () => {
             id={item.id}
             isCompleted={item.isCompleted}
             text={item.text}
+            deleteTodo={deleteTodo}
+            toogle={toogle}
           />
         ))}
       </div>
